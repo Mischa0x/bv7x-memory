@@ -1,0 +1,293 @@
+{
+ "_what": "BV-7X strategy-fleet nightly aggregates, Base Sepolia 84532.",
+ "_granularity": "night-level counts only. No per-agent rows, no open-call directions.",
+ "_frozen": "2026-08-31",
+ "nights": [
+  {
+   "date": "2026-08-05",
+   "called": 1,
+   "up": 1,
+   "down": 0,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 1,
+   "total": 10,
+   "obedience_rate": 0.1
+  },
+  {
+   "date": "2026-08-06",
+   "called": 2,
+   "up": 1,
+   "down": 1,
+   "failed": 0,
+   "abstained": 8,
+   "settled": 2,
+   "total": 10,
+   "obedience_rate": 0.2
+  },
+  {
+   "date": "2026-08-07",
+   "called": 1,
+   "up": 1,
+   "down": 0,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 1,
+   "total": 10,
+   "obedience_rate": 0.1
+  },
+  {
+   "date": "2026-08-08",
+   "called": 3,
+   "up": 1,
+   "down": 2,
+   "failed": 0,
+   "abstained": 7,
+   "settled": 3,
+   "total": 10,
+   "obedience_rate": 0.3
+  },
+  {
+   "date": "2026-08-09",
+   "called": 0,
+   "up": 0,
+   "down": 0,
+   "failed": 0,
+   "abstained": 10,
+   "settled": 0,
+   "total": 10,
+   "obedience_rate": 0.0
+  },
+  {
+   "date": "2026-08-10",
+   "called": 1,
+   "up": 0,
+   "down": 1,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 1,
+   "total": 10,
+   "obedience_rate": 0.1
+  },
+  {
+   "date": "2026-08-11",
+   "called": 8,
+   "up": 5,
+   "down": 3,
+   "failed": 0,
+   "abstained": 7,
+   "settled": 8,
+   "total": 15,
+   "obedience_rate": 0.5333
+  },
+  {
+   "date": "2026-08-12",
+   "called": 7,
+   "up": 3,
+   "down": 4,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 7,
+   "total": 16,
+   "obedience_rate": 0.4375
+  },
+  {
+   "date": "2026-08-13",
+   "called": 5,
+   "up": 1,
+   "down": 4,
+   "failed": 0,
+   "abstained": 11,
+   "settled": 5,
+   "total": 16,
+   "obedience_rate": 0.3125
+  },
+  {
+   "date": "2026-08-14",
+   "called": 7,
+   "up": 1,
+   "down": 6,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 7,
+   "total": 16,
+   "obedience_rate": 0.4375
+  },
+  {
+   "date": "2026-08-15",
+   "called": 8,
+   "up": 3,
+   "down": 5,
+   "failed": 0,
+   "abstained": 8,
+   "settled": 8,
+   "total": 16,
+   "obedience_rate": 0.5
+  },
+  {
+   "date": "2026-08-16",
+   "called": 8,
+   "up": 3,
+   "down": 5,
+   "failed": 0,
+   "abstained": 8,
+   "settled": 8,
+   "total": 16,
+   "obedience_rate": 0.5
+  },
+  {
+   "date": "2026-08-17",
+   "called": 9,
+   "up": 5,
+   "down": 4,
+   "failed": 0,
+   "abstained": 7,
+   "settled": 9,
+   "total": 16,
+   "obedience_rate": 0.5625
+  },
+  {
+   "date": "2026-08-18",
+   "called": 7,
+   "up": 5,
+   "down": 2,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 7,
+   "total": 16,
+   "obedience_rate": 0.4375
+  },
+  {
+   "date": "2026-08-19",
+   "called": 11,
+   "up": 9,
+   "down": 2,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 11,
+   "total": 20,
+   "obedience_rate": 0.55
+  },
+  {
+   "date": "2026-08-20",
+   "called": 13,
+   "up": 9,
+   "down": 4,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 13,
+   "total": 22,
+   "obedience_rate": 0.5909
+  },
+  {
+   "date": "2026-08-21",
+   "called": 16,
+   "up": 11,
+   "down": 5,
+   "failed": 0,
+   "abstained": 6,
+   "settled": 16,
+   "total": 22,
+   "obedience_rate": 0.7273
+  },
+  {
+   "date": "2026-08-22",
+   "called": 17,
+   "up": 11,
+   "down": 6,
+   "failed": 0,
+   "abstained": 7,
+   "settled": 17,
+   "total": 24,
+   "obedience_rate": 0.7083
+  },
+  {
+   "date": "2026-08-23",
+   "called": 27,
+   "up": 15,
+   "down": 12,
+   "failed": 0,
+   "abstained": 8,
+   "settled": 27,
+   "total": 35,
+   "obedience_rate": 0.7714
+  },
+  {
+   "date": "2026-08-24",
+   "called": 76,
+   "up": 42,
+   "down": 34,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 8,
+   "total": 85,
+   "obedience_rate": 0.8941
+  },
+  {
+   "date": "2026-08-25",
+   "called": 1008,
+   "up": 548,
+   "down": 460,
+   "failed": 0,
+   "abstained": 9,
+   "settled": 10,
+   "total": 1017,
+   "obedience_rate": 0.9912
+  },
+  {
+   "date": "2026-08-26",
+   "called": 1936,
+   "up": 1067,
+   "down": 869,
+   "failed": 0,
+   "abstained": 10,
+   "settled": 9,
+   "total": 1946,
+   "obedience_rate": 0.9949
+  },
+  {
+   "date": "2026-08-27",
+   "called": 718,
+   "up": 389,
+   "down": 329,
+   "failed": 1228,
+   "abstained": 1,
+   "settled": 3,
+   "total": 1947,
+   "obedience_rate": 0.3688
+  },
+  {
+   "date": "2026-08-28",
+   "called": 0,
+   "up": 0,
+   "down": 0,
+   "failed": 1947,
+   "abstained": 0,
+   "settled": 0,
+   "total": 1947,
+   "obedience_rate": 0.0
+  },
+  {
+   "date": "2026-08-29",
+   "called": 0,
+   "up": 0,
+   "down": 0,
+   "failed": 1947,
+   "abstained": 0,
+   "settled": 0,
+   "total": 1947,
+   "obedience_rate": 0.0
+  },
+  {
+   "date": "2026-08-30",
+   "called": 0,
+   "up": 0,
+   "down": 0,
+   "failed": 2877,
+   "abstained": 0,
+   "settled": 0,
+   "total": 2877,
+   "obedience_rate": 0.0
+  }
+ ]
+}
