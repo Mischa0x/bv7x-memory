@@ -72,6 +72,22 @@ every panel runs on your machine exactly as it runs on ours.
 | `SIBYL_DEMO_STORE` | `~/.sibyl-memory/bv7x-demo.db` |
 | `BV7X_AGENTS_DB` | unset — falls back to `data/fleet-nights.json` |
 
+## The foundation: atom parity
+
+`quorum/why.py` decides which facts produced a call. It is a port of the production
+evaluator (`polypool/agents/services/predicateEval.js`) and it is tested against a
+byte-identical vendored copy of that file on **every one of 23,106 live rows** from
+21 Season 1 nights — not a sample. `tests/test_parity.py` carries two positive
+controls so that "0 disagreements" is known to be a measurement: a mutated operator
+flips 9 rows, and the evaluator's short-circuit order is asserted observable.
+
+```
+python3 -m unittest tests.test_parity -v      # stdlib, no database, no node
+```
+
+CI runs the JS oracle and the Python port as separate jobs. Provenance for the vendored
+files, with git blob hashes, is in `tests/vendor/PROVENANCE.md`.
+
 ## Two records, never merged
 
 | | chain | what |

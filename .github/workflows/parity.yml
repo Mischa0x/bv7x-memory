@@ -1,0 +1,33 @@
+# Atom parity — the foundation check.
+#
+# Two independent halves, deliberately in separate jobs:
+#   1. oracle   — regenerate expected.json from the VENDORED production evaluator and
+#                 diff it against the committed copy. Red means the vendored JS and the
+#                 committed expectations disagree (someone refreshed one, not the other).
+#   2. parity   — the stdlib Python evaluator against the committed expectations, on
+#                 every one of the frozen live rows. Red means the port drifted from
+#                 production semantics.
+#
+# Neither job needs the database or a Sibyl account — that is the judge-simulation rule
+# from the plan, and it is why the fixtures are committed rather than generated here.
+name: parity
+on: [push, pull_request]
+jobs:
+  oracle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: regenerate expected.json from vendored predicateEval.js
+        run: node tests/regen_expected.js
+      - name: committed expectations must match the vendored oracle byte for byte
+        run: git diff --exit-code -- tests/fixtures/expected.json
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: python evaluator agrees with production on every live row
+        run: python3 -m unittest tests.test_parity -v
