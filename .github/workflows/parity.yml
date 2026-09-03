@@ -31,3 +31,17 @@ jobs:
         with: { python-version: '3.12' }
       - name: python evaluator agrees with production on every live row
         run: python3 -m unittest tests.test_parity -v
+
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: the record logic runs on the stdlib (no client)
+        run: python3 -m unittest tests.test_record -v
+      - name: install the Sibyl client and run the gate end to end
+        run: |
+          pip install sibyl-memory-client==0.7.0
+          python3 -m unittest tests.test_record.Live -v
+          ./deletion-test.sh

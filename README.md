@@ -72,6 +72,32 @@ every panel runs on your machine exactly as it runs on ours.
 | `SIBYL_DEMO_STORE` | `~/.sibyl-memory/bv7x-demo.db` |
 | `BV7X_AGENTS_DB` | unset — falls back to `data/fleet-nights.json` |
 
+## The gate: deleting memory changes the answer
+
+`quorum/record.py` writes a decision record for every call into Sibyl memory —
+not a stored blob, but a JOIN of (rule, snapshot) that `why.py` reconstructs on
+read. From it the field's belief is computed two ways:
+
+- **with memory** — the *evidenced* subset, the calls that rested on a condition
+  that actually held, with a Wilson interval;
+- **without memory** — the naive vote count, which needs no store at all.
+
+On the night of 27 August 2026 those disagree: the naive vote is **54.3% UP**
+(CI [50.6, 57.9] — a verdict) and the warranted belief is **47.8% UP**
+(CI [43.8, 51.8] — no lean, on the other side of the line). Sibyl scores an
+entry by deleting the memory layer; ours changes the answer when you do.
+
+```
+./deletion-test.sh                 # ingest the frozen field, print with vs without
+python3 -m unittest tests.test_record -v   # gate logic, stdlib, no client
+```
+
+The whole field — 23,106 records across 21 nights — fits in **~4.1 MB**, under
+the client's 5 MB free-tier cap, because records are normalised (rules once,
+snapshots per night, a compact `rid:sid` row string) and the reconstruction data
+lives in state rather than in FTS-indexed entities. An absent night renders
+**CANNOT SAY**, never a default or a zero.
+
 ## The foundation: atom parity
 
 `quorum/why.py` decides which facts produced a call. It is a port of the production
