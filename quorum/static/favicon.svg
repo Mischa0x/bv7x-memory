@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- §12.4 favicon reduction: below 24px the full mark is not shrunk. The
+       identity silhouette is dark plate + gold spark, and that is all this is. -->
+  <rect width="32" height="32" rx="7" fill="#050308"/>
+  <circle cx="14" cy="18" r="8" fill="#2E1354"/>
+  <circle cx="12.5" cy="16" r="5" fill="#3D55E8" opacity=".55"/>
+  <circle cx="22" cy="10" r="3.4" fill="#FFD23F"/>
+  <circle cx="22" cy="10" r="1.5" fill="#FFF8DA"/>
+</svg>

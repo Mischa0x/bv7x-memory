@@ -98,6 +98,45 @@ snapshots per night, a compact `rid:sid` row string) and the reconstruction data
 lives in state rather than in FTS-indexed entities. An absent night renders
 **CANNOT SAY**, never a default or a zero.
 
+## The screen
+
+```
+python3 -m quorum serve          # http://127.0.0.1:8420 — stdlib only, no build step
+```
+
+One screen, one control. **WHY** — the signals that decided tonight, counted over
+deciding atoms. **THE FIELD** — one node per call, lit if its rule fired, shadowed
+if it defaulted through an else leg. **THE BELIEF** — the warranted rate, its
+interval, and a verdict.
+
+Then flip the switch. The shadowed nodes light up as if they were evidence, the
+interval snaps to [50.6, 57.9], and the page emits a confident **UP** — the
+direction its own evidenced agents contradict. Nothing about that transition is
+staged: both answers are recomputed server-side per request.
+
+**Memory is on the critical path, and the endpoint proves it.** `memory=on` opens
+the store, reads the night's decision records and re-derives each call's basis
+from (rule × snapshot). Nothing is cached; the response carries the wall-clock
+milliseconds it took. `memory=off` is constructed *without opening the store at
+all*, because the naive vote has to remain reachable with the memory layer
+deleted — otherwise the comparison would be a claim rather than a demonstration.
+
+Delete the store and the page still serves: WHY and THE BELIEF render **CANNOT
+SAY**, the naive side keeps answering, and nothing invents a number. That is the
+deletion gate on the surface a judge actually clicks, and it is pinned by tests:
+
+```
+python3 -m unittest tests.test_server -v   # 11 tests, stdlib; the gate over HTTP
+```
+
+The lattice math (`fibonacciLattice`, `depthOpacity`, `depthRadius`) is ported from
+`polypool/web/src/hologram/sphere.ts` rather than reinvented, so the field here and
+the swarm on app.bv7x.ai are the same object seen twice. The palette is BV-7X
+FIRST LIGHT, and two of its laws do real work: the field ramp is ordered lit→shadow
+as proximity to signal, which here means *did your rule fire*; and gold marks only
+a verdict the interval supports. With memory on, most nights, there is no gold on
+the page at all. That is the honest picture, and the brand already says so.
+
 ## The foundation: atom parity
 
 `quorum/why.py` decides which facts produced a call. It is a port of the production

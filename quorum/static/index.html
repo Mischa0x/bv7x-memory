@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QUORUM — memory of why</title>
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="quorum.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Quorum</h1>
+    <label class="switch-label" for="night">night</label>
+    <select id="night" aria-label="Night"></select>
+    <div class="stamp" id="stamp">—</div>
+  </header>
+
+  <div class="grid">
+
+    <section class="col" aria-labelledby="h-why">
+      <h2 id="h-why">Why</h2>
+      <div class="panel">
+        <div class="why" id="why"></div>
+        <p class="note" id="why-note"></p>
+      </div>
+    </section>
+
+    <section class="col" aria-labelledby="h-field">
+      <h2 id="h-field">The field</h2>
+      <div class="field-wrap">
+        <canvas id="field" aria-label="The night's calls, one node each: lit if its rule fired, shadowed if it defaulted."></canvas>
+        <div class="legend">
+          <span id="legend-lit"><i class="dot lit"></i><b>lit</b> — its rule fired</span>
+          <span id="legend-shadow"><i class="dot shadow"></i><b>shadow</b> — defaulted (else leg)</span>
+          <span id="field-count"></span>
+          <span id="field-note" class="legend-note"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="col belief" aria-labelledby="h-belief">
+      <h2 id="h-belief">The belief</h2>
+      <div class="panel" id="belief"></div>
+    </section>
+
+  </div>
+
+  <div class="switch-row">
+    <button class="switch" id="switch" aria-pressed="true">
+      <span class="track"><span class="knob"></span></span>
+      <span class="switch-label" id="switch-label">Sibyl memory · on</span>
+    </button>
+    <p class="switch-hint" id="switch-hint"></p>
+  </div>
+
+  <footer>
+    Every panel is recomputed on the server for each request — with memory on, from the decision
+    records in the Sibyl store; with memory off, from the published directions alone, without
+    opening the store at all. Delete the store and this page renders CANNOT SAY.
+    No rate is printed below n=30. The evidenced split is a claim about <em>warrant</em>, not about
+    being right — our own data says the edge is not there.
+  </footer>
+
+</div>
+<script src="field.js"></script>
+</body>
+</html>

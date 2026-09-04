@@ -4,6 +4,7 @@
   status  [--store PATH]                                   nights in memory, store size, tier
   field   NIGHT [--store PATH] [--memory on|off]           the field's belief for a night
   record  NIGHT RULE_ID [--store PATH]                     one decision record, reconstructed
+  serve   [--port N] [--store PATH]                        the screen: the field explains itself
 """
 import argparse, json, os, sys
 from .record import QuorumMemory, DEFAULT_STORE, CANNOT_SAY
@@ -16,6 +17,7 @@ def main(argv=None):
     a = sub.add_parser('status'); a.add_argument('--store', default=DEFAULT_STORE)
     a = sub.add_parser('field'); a.add_argument('night'); a.add_argument('--store', default=DEFAULT_STORE); a.add_argument('--memory', choices=['on', 'off'], default='on')
     a = sub.add_parser('record'); a.add_argument('night'); a.add_argument('rule'); a.add_argument('--store', default=DEFAULT_STORE)
+    a = sub.add_parser('serve'); a.add_argument('--port', type=int, default=8420); a.add_argument('--store', default=DEFAULT_STORE)
     args = p.parse_args(argv)
 
     if args.cmd == 'field' and args.memory == 'off':
@@ -24,6 +26,10 @@ def main(argv=None):
         D = json.load(open(src))
         dirs = [r[3] for r in D['rows'] if r[2] == args.night]
         print(json.dumps(QuorumMemory(None).field(args.night, memory=False, naive_directions=dirs), indent=1)); return 0
+
+    if args.cmd == 'serve':
+        from .server import serve
+        return serve(args.port, args.store)
 
     if args.cmd in ('field', 'record', 'status') and not os.path.exists(args.store):
         # The deletion gate, honoured at the CLI: no store means CANNOT SAY, not an exception and not zeros.

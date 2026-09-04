@@ -1,0 +1,133 @@
+/* QUORUM — FIRST LIGHT (BV7X New Brand v2).
+ *
+ * Two brand laws do real work here, they are not decoration:
+ *
+ * §3.2  The field ramp is ordered lit -> shadow as PROXIMITY TO SIGNAL. On this
+ *       screen that ordering has one meaning: did your rule actually fire. A lit
+ *       node rests on a condition that held; a shadowed node defaulted through
+ *       an else leg. The ramp is the finding.
+ *
+ * §3.3  "If nothing is live, there is no gold; a view with zero gold is correct,
+ *       calm, and common." Gold marks a verdict the interval supports — and
+ *       nothing else. No lean, n below the floor, or CANNOT SAY all render with
+ *       no gold anywhere on the page. Most nights that is the honest picture.
+ */
+:root {
+  --void: #030207;  --space: #0A0518;  --nebula: #1A0D33;  --surface-raise: #0D0A1A;
+
+  --ice-core: #F2FBFF; --ice: #BFEFFF; --sky: #4FC0FF; --cobalt: #3D7BFF;
+  --royal: #3D55E8;    --violet: #6B2FC4; --violet-deep: #552399; --violet-shadow: #2E1354;
+
+  --signal-gold: #FFD23F; --signal-core: #FFF8DA; --signal-deep: #C77E12; --signal-bloom: #FFB03A;
+
+  --ink: #FFFFFF; --ink-dim: #9AA3B8; --ink-faint: #5C6478;
+  --hair: rgba(191,239,255,.10);
+
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  /* §14 asks for Inter <= Medium on headlines. Used when the machine has it;
+     otherwise the system stack. No webfont is fetched — this tool has to run
+     with the network off, and a judge should never meet a broken face. */
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--void); color: var(--ink);
+  font: 13px/1.55 var(--sans);
+  /* §14: radial, biased upper-right, never lighter than --nebula at core. */
+  background-image: radial-gradient(ellipse 95% 75% at 78% 4%, var(--nebula) 0%, var(--space) 46%, var(--void) 100%);
+  background-attachment: fixed;
+}
+a { color: var(--sky); }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 22px 20px 60px; }
+
+/* ── header ───────────────────────────────────────────────────────────── */
+header { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: baseline;
+         padding-bottom: 14px; border-bottom: 1px solid var(--hair); }
+h1 { font-size: 14px; letter-spacing: .22em; font-weight: 600; margin: 0; text-transform: uppercase; }
+.stamp { margin-left: auto; color: var(--ink-faint); font: 11px var(--mono); letter-spacing: .04em; }
+.stamp b { color: var(--ink-dim); font-weight: 500; }
+select {
+  background: var(--surface-raise); color: var(--ink); border: 1px solid var(--hair);
+  border-radius: 4px; padding: 4px 8px; font: inherit; font-size: 12px;
+}
+select:focus-visible { outline: 2px solid var(--signal-gold); outline-offset: 1px; }
+
+/* ── the three columns ────────────────────────────────────────────────── */
+.grid { display: grid; grid-template-columns: 230px minmax(0,1fr) 270px; gap: 22px; margin-top: 20px; }
+@media (max-width: 940px) { .grid { grid-template-columns: 1fr; } }
+
+.col > h2 {
+  font-size: 10px; letter-spacing: .26em; color: var(--ink-faint);
+  text-transform: uppercase; font-weight: 600; margin: 0 0 12px;
+}
+.panel { background: var(--surface-raise); border: 1px solid var(--hair); border-radius: 6px; padding: 12px 13px; }
+
+/* WHY */
+.why { display: grid; gap: 7px; }
+.why-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+.why-sig { color: var(--ink-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.why-n { color: var(--ink-faint); font: 12px var(--mono); font-variant-numeric: tabular-nums; }
+.bar { grid-column: 1 / -1; height: 3px; border-radius: 2px; background: rgba(46,19,84,.55); overflow: hidden; }
+.bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--sky), var(--ice)); }
+.note { color: var(--ink-faint); font-size: 11px; line-height: 1.45; margin-top: 12px; }
+
+/* THE FIELD */
+.field-wrap { position: relative; background: var(--surface-raise); border: 1px solid var(--hair);
+              border-radius: 6px; overflow: hidden; }
+canvas { display: block; width: 100%; height: 420px; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; padding: 10px 13px; border-top: 1px solid var(--hair);
+          color: var(--ink-faint); font-size: 11px; }
+.legend b { font-weight: 500; color: var(--ink-dim); }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.dot.lit { background: var(--ice); box-shadow: 0 0 6px var(--sky); }
+.dot.shadow { background: var(--violet-shadow); }
+
+/* THE BELIEF */
+.belief dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 6px 10px; }
+.belief dt { color: var(--ink-dim); }
+.belief dd { margin: 0; text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.rate { font: 26px var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.01em; margin: 14px 0 2px; }
+.ci { color: var(--ink-faint); font: 11px var(--mono); }
+hr { border: 0; border-top: 1px solid var(--hair); margin: 14px 0; }
+
+.verdict { margin-top: 14px; padding: 11px 12px; border-radius: 5px;
+           border: 1px solid var(--hair); background: rgba(10,5,24,.6); }
+.verdict .label { font-size: 10px; letter-spacing: .22em; color: var(--ink-faint); text-transform: uppercase; }
+.verdict .value { font-size: 19px; letter-spacing: .04em; margin-top: 4px; }
+/* §3.3 — gold ONLY when the interval actually supports a lean. */
+.verdict.live { border-color: rgba(255,210,63,.45); background:
+  radial-gradient(120% 140% at 12% 0%, rgba(255,176,58,.16) 0%, rgba(10,5,24,.6) 60%); }
+.verdict.live .value { color: var(--signal-gold); text-shadow: 0 0 18px rgba(255,210,63,.45); }
+.verdict.quiet .value { color: var(--ink-dim); }
+
+/* honest states */
+.withheld { color: var(--ink-faint); font-size: 11px; line-height: 1.45; margin-top: 6px; }
+.cannot-say { padding: 22px 16px; text-align: center; }
+.cannot-say .big { font-size: 17px; letter-spacing: .18em; color: var(--ink-dim); }
+.cannot-say .why-not { color: var(--ink-faint); font-size: 11px; margin-top: 8px; line-height: 1.5; }
+.failed .big { color: var(--signal-ember, #FF6A3A); }
+
+/* ── the switch ───────────────────────────────────────────────────────── */
+.switch-row { display: flex; align-items: center; gap: 14px; justify-content: center;
+              margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--hair); flex-wrap: wrap; }
+.switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+          background: none; border: 0; color: inherit; font: inherit; padding: 6px 4px; }
+.switch:focus-visible { outline: 2px solid var(--signal-gold); outline-offset: 3px; border-radius: 4px; }
+.track { width: 46px; height: 22px; border-radius: 11px; background: rgba(46,19,84,.8);
+         border: 1px solid var(--hair); position: relative; transition: background .18s ease; }
+.knob { position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%;
+        background: var(--violet); transition: transform .18s ease, background .18s ease; }
+.switch[aria-pressed="true"] .track { background: rgba(61,123,255,.35); }
+.switch[aria-pressed="true"] .knob { transform: translateX(24px); background: var(--ice); }
+.switch-label { letter-spacing: .18em; font-size: 11px; text-transform: uppercase; color: var(--ink-dim); }
+.switch-hint { color: var(--ink-faint); font-size: 11px; max-width: 46ch; text-align: center; }
+
+footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--hair);
+         color: var(--ink-faint); font-size: 11px; line-height: 1.6; }
+
+.legend-note { flex-basis: 100%; color: var(--ink-faint); line-height: 1.5; }
+.panel > .cannot-say { padding: 10px 0 2px; text-align: left; }
+.panel > .cannot-say .big { font-size: 13px; letter-spacing: .2em; }
