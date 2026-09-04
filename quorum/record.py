@@ -134,7 +134,8 @@ class QuorumMemory:
         if tenant_id is None:
             tenant_id = DEFAULT_TENANT
             try:
-                c = json.load(open(os.path.expanduser('~/.sibyl-memory/credentials.json')))
+                with open(os.path.expanduser('~/.sibyl-memory/credentials.json')) as fh:
+                    c = json.load(fh)
                 tenant_id = c.get('tenant_id') or c.get('account_id') or DEFAULT_TENANT
             except Exception:
                 pass

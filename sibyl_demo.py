@@ -199,12 +199,20 @@ def backfill_fleet(mem):
         FROM predictions GROUP BY d ORDER BY d""").fetchall()
     n = 0
     for r in rows:
-        called = r["called"] or 0
+        called, settled = r["called"] or 0, r["settled"] or 0
+        # An open call's direction is withheld in aggregate as well as per
+        # agent: a night that has not fully settled still describes live
+        # positions, and its up/down IS the signal. Same rule the frozen
+        # snapshot is cut under (tools/refreeze-fleet.py) — stated in both
+        # places on purpose, because they must not drift.
+        fully_settled = settled >= called   # called == 0 -> 0/0, a fact, not a secret
         body = {
             "record": "fleet", "chain_id": 84532, "chain": "base-sepolia",
-            "date": r["d"], "called": called, "up": r["up"] or 0, "down": r["down"] or 0,
+            "date": r["d"], "called": called,
+            "up":   (r["up"]   or 0) if fully_settled else None,
+            "down": (r["down"] or 0) if fully_settled else None,
             "failed": r["failed"] or 0, "abstained": r["abstained"] or 0,
-            "settled": r["settled"] or 0, "total": r["total"] or 0,
+            "settled": settled, "total": r["total"] or 0,
             "obedience_rate": (round(called / r["total"], 4) if r["total"] else None),
             "_note": "aggregates only; per-agent is below statistical power",
         }

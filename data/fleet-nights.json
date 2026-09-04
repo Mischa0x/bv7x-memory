@@ -1,7 +1,7 @@
 {
  "_what": "BV-7X strategy-fleet nightly aggregates, Base Sepolia 84532.",
- "_granularity": "night-level counts only. No per-agent rows, no open-call directions.",
- "_frozen": "2026-08-31",
+ "_granularity": "night-level counts only. No per-agent rows. An open call's direction is withheld in aggregate as well as per agent, so up/down are null on any night whose calls have not all settled.",
+ "_frozen": "2026-09-04",
  "nights": [
   {
    "date": "2026-08-05",
@@ -219,7 +219,7 @@
    "down": 34,
    "failed": 0,
    "abstained": 9,
-   "settled": 8,
+   "settled": 76,
    "total": 85,
    "obedience_rate": 0.8941
   },
@@ -230,7 +230,7 @@
    "down": 460,
    "failed": 0,
    "abstained": 9,
-   "settled": 10,
+   "settled": 1008,
    "total": 1017,
    "obedience_rate": 0.9912
   },
@@ -241,7 +241,7 @@
    "down": 869,
    "failed": 0,
    "abstained": 10,
-   "settled": 9,
+   "settled": 1936,
    "total": 1946,
    "obedience_rate": 0.9949
   },
@@ -252,7 +252,7 @@
    "down": 329,
    "failed": 1228,
    "abstained": 1,
-   "settled": 3,
+   "settled": 718,
    "total": 1947,
    "obedience_rate": 0.3688
   },
@@ -288,6 +288,54 @@
    "settled": 0,
    "total": 2877,
    "obedience_rate": 0.0
+  },
+  {
+   "date": "2026-08-31",
+   "called": 5596,
+   "up": null,
+   "down": null,
+   "failed": 0,
+   "abstained": 10,
+   "settled": 8,
+   "total": 5606,
+   "obedience_rate": 0.9982,
+   "_directions_withheld": "open calls remain; aggregate lean is the signal"
+  },
+  {
+   "date": "2026-09-01",
+   "called": 5596,
+   "up": null,
+   "down": null,
+   "failed": 0,
+   "abstained": 10,
+   "settled": 8,
+   "total": 5606,
+   "obedience_rate": 0.9982,
+   "_directions_withheld": "open calls remain; aggregate lean is the signal"
+  },
+  {
+   "date": "2026-09-02",
+   "called": 5596,
+   "up": null,
+   "down": null,
+   "failed": 0,
+   "abstained": 10,
+   "settled": 8,
+   "total": 5606,
+   "obedience_rate": 0.9982,
+   "_directions_withheld": "open calls remain; aggregate lean is the signal"
+  },
+  {
+   "date": "2026-09-03",
+   "called": 5596,
+   "up": null,
+   "down": null,
+   "failed": 0,
+   "abstained": 10,
+   "settled": 0,
+   "total": 5606,
+   "obedience_rate": 0.9982,
+   "_directions_withheld": "open calls remain; aggregate lean is the signal"
   }
  ]
 }
