@@ -42,6 +42,8 @@ jobs:
         run: python3 -m unittest tests.test_record -v
       - name: the screen serves, and the gate holds over HTTP, with no store present
         run: python3 -m unittest tests.test_server -v
+      - name: the cohort test detects real clustering and refuses it where absent
+        run: python3 -m unittest tests.test_cohorts -v
       - name: install the Sibyl client and run the gate end to end
         run: |
           pip install sibyl-memory-client==0.7.0

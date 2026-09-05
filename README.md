@@ -137,6 +137,53 @@ as proximity to signal, which here means *did your rule fire*; and gold marks on
 a verdict the interval supports. With memory on, most nights, there is no gold on
 the page at all. That is the honest picture, and the brand already says so.
 
+## Are they the same opinion? (a claim, tested, and refuted)
+
+There is an obvious argument that the field is far smaller than it looks. A call
+is a function of (rule, market snapshot); every agent sees the same snapshot on a
+given night; so agents whose rules read the same signals should be one opinion
+wearing many coats. On 27 August that would collapse **1,926 calls** into the
+**72 distinct signal-configurations** behind them — by Kish's effective sample
+size, about **56 opinions**, a 34× overstatement in every belief computed over
+calls.
+
+It is a good argument and it is wrong. If a configuration were an opinion, agents
+inside one would agree far more than strangers do. So compare each cohort against
+the agreement that `n` **independent** agents would reach by chance at the field's
+own UP rate — `E[max(k, n-k)]/n` for `k ~ Binomial(n, p)`, computed exactly:
+
+```
+36 cohorts at n>=30
+  observed agreement          56.07%
+  expected if independent     56.53%
+  excess                      -0.45pp
+```
+
+Agents that read the same signals are **statistically indistinguishable from
+strangers**. A configuration fixes *which* signals a rule reads, not the
+thresholds it reads them at — and thresholds are agent-specific, so two agents on
+`{vix, roc7d}` split on the same snapshot. Earlier work found this at the atom
+level ("facts fragment"); this reaches it independently at the cohort level.
+
+Note how high the baseline is. 56% agreement *sounds* like consensus and is
+exactly what coin flips produce at this sample size. A tool that reported the
+56.3 and stopped would have manufactured a finding.
+
+**And every number here is recoverable only from memory.** The published record
+carries a direction per agent and nothing else; a configuration is a property of
+the *rule*, and the rule is in the store. Delete it and the panel does not degrade
+to an estimate — it returns CANNOT SAY, because the question cannot be asked. What
+memory bought is not a better answer. It is the ability to ask, and to have it
+come back *no*.
+
+```
+python3 -m unittest tests.test_cohorts -v   # 12 tests, stdlib
+```
+
+The clustering test is drilled in both directions: synthetic cohorts that really
+are one opinion register as clustered, cohorts that split do not. A test that
+could only ever pass would be decoration.
+
 ## The foundation: atom parity
 
 `quorum/why.py` decides which facts produced a call. It is a port of the production

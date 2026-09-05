@@ -23,8 +23,10 @@ from collections import Counter
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 
-from .record import QuorumMemory, DEFAULT_STORE, CANNOT_SAY, MIN_N, wilson
+from .record import QuorumMemory, DEFAULT_STORE, CANNOT_SAY, MIN_N, wilson, decode_rule
 from ._gate import _verdict
+from .cohorts import cohort_stats
+from .why import signals_of
 
 HERE     = os.path.dirname(os.path.abspath(__file__))
 STATIC   = os.path.join(HERE, 'static')
@@ -60,6 +62,11 @@ def field_off(night):
             'nodes': '1' * len(dirs),
             'belief': _share(len(dirs), k),
             'belief_label': 'naive vote (no memory)',
+            # A configuration is a property of the RULE, and the rule lives in
+            # the store. Without it you can count votes but cannot know how many
+            # of them were the same vote.
+            'cohorts': {'status': CANNOT_SAY,
+                        'reason': 'a configuration is a property of the rule, and the rule is in the store'},
             'warrant': CANNOT_SAY}
 
 
@@ -90,7 +97,18 @@ def field_on(night, store):
     why = [{'signal': s, 'deciding': c, 'held': held.get(s, 0)}
            for s, c in deciding.most_common(8)]
 
+    # Configurations come from the rules in memory - derived here, never stored,
+    # so the number cannot drift from the records it describes.
+    sig_by_rule = {}
+    for rid, enc in mem._rules().items():
+        try:
+            sig_by_rule[rid] = signals_of(decode_rule(enc))
+        except Exception:
+            pass                      # an undecodable rule stays unplaced, and is counted as such
+
     return {'night': night, 'memory': True, 'status': 'ok',
+            'cohorts': cohort_stats(recs, sig_by_rule) or {
+                'status': CANNOT_SAY, 'reason': 'no calls in memory for this night'},
             'counts': {'rows': len(recs), 'calls': len(calls),
                        'evidenced': len(ev), 'default': len(de),
                        'no_call': len(recs) - len(calls)},

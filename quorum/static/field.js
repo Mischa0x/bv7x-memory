@@ -149,10 +149,76 @@ function renderBelief(d) {
     </div>`;
 }
 
+function renderCohorts(d) {
+  const el = $('cohorts'), c = d.cohorts;
+  if (!c || c.status) {
+    el.innerHTML = `<div class="cannot-say">
+        <div class="big">CANNOT SAY</div>
+        <div class="why-not">${(c && c.reason) || 'no cohort data'}<br><br>
+          Without memory you can count the votes. You cannot know how many of them
+          were the same vote — so the question below cannot even be asked, let alone
+          answered.</div>
+      </div>`;
+    return;
+  }
+  const pp = v => (v == null ? '—' : (v > 0 ? '+' : '') + v.toFixed(2) + 'pp');
+  const rows = c.largest.map(g => `
+      <tr>
+        <td class="sig">${g.signals.join(' · ')}</td>
+        <td class="num">${num(g.n)}</td>
+        <td class="num">${g.lean}</td>
+        <td class="num">${g.withheld ? 'n&lt;30' : (g.agreement * 100).toFixed(1) + '%'}</td>
+        <td class="num">${g.withheld ? '—' : (g.expected * 100).toFixed(1) + '%'}</td>
+        <td class="num">${g.withheld ? '—' : pp(g.excess_pp)}</td>
+      </tr>`).join('');
+
+  el.innerHTML = `
+    <div class="claim-grid">
+      <div class="claim">
+        <div class="k">the field</div>
+        <div class="v">${num(c.calls)} calls</div>
+        <div class="d">across ${num(c.configurations)} distinct signal-configurations${
+          c.unplaced ? ` · ${num(c.unplaced)} unplaced` : ''}.</div>
+      </div>
+      <div class="claim refuted">
+        <div class="k">the claim, if a configuration were an opinion</div>
+        <div class="v">${c.n_eff_if_clustered} opinions</div>
+        <div class="d">Kish effective sample size — a ${c.collapse_if_clustered}x collapse. It assumes
+          agents inside a cohort agree. They do not.</div>
+      </div>
+      <div class="claim result">
+        <div class="k">the test, over ${num(c.tested_cohorts)} cohorts at n&ge;30</div>
+        <div class="v">${pp(c.excess_pp)}</div>
+        <div class="d">agreement above what ${num(c.tested_cohorts)} groups of INDEPENDENT agents would
+          reach by chance at the field's own ${(c.up_rate * 100).toFixed(1)}% UP rate.</div>
+      </div>
+    </div>
+
+    <table class="cohort-table">
+      <thead><tr>
+        <th>largest cohorts</th><th class="num">n</th><th class="num">lean</th>
+        <th class="num">agree</th><th class="num">if independent</th><th class="num">excess</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+
+    <p class="verdict-line"><b>${c.verdict === 'cohorts cluster' ? 'Cohorts cluster.'
+        : 'Indistinguishable from independent.'}</b>
+      Observed ${(c.observed_agreement * 100).toFixed(2)}% against
+      ${(c.expected_if_independent * 100).toFixed(2)}% expected by chance. Agents that read the same
+      signals are no more alike than strangers — because a configuration fixes WHICH signals a rule
+      reads, not the thresholds it reads them at. The obvious collapse is not there.
+      <br><br>
+      Every number in this panel is recoverable only from memory: a configuration is a property of the
+      rule, and the rule is in the store. What memory bought here is not a better answer — it is the
+      ability to ask the question, and to have it come back no.</p>`;
+}
+
 function renderCannotSay(d) {
   const failed = d.status === 'FAILED';
   $('why').innerHTML = ''; $('why-note').textContent = '';
   $('field-count').textContent = ''; $('field-note').textContent = '';
+  renderCohorts({ cohorts: { status: d.status, reason: d.reason } });
   setNodes('');
   $('belief').innerHTML = `<div class="cannot-say ${failed ? 'failed' : ''}">
       <div class="big">${failed ? 'FAILED' : 'CANNOT SAY'}</div>
@@ -180,6 +246,7 @@ async function load() {
 
   renderWhy(d);
   renderBelief(d);
+  renderCohorts(d);
   setNodes(d.nodes);
   const shown = sampled ? `showing 6,000 of ${num(sampled)} calls (evenly sampled)`
                         : `${num(nodes.length)} calls`;

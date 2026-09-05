@@ -131,3 +131,27 @@ footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--hair);
 .legend-note { flex-basis: 100%; color: var(--ink-faint); line-height: 1.5; }
 .panel > .cannot-say { padding: 10px 0 2px; text-align: left; }
 .panel > .cannot-say .big { font-size: 13px; letter-spacing: .2em; }
+
+/* ── cohorts: the claim, the test, the verdict ─────────────────────────── */
+.cohorts { margin-top: 22px; }
+.cohorts > h2 { font-size: 10px; letter-spacing: .26em; color: var(--ink-faint);
+                text-transform: uppercase; font-weight: 600; margin: 0 0 12px; }
+.claim-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+@media (max-width: 780px) { .claim-grid { grid-template-columns: 1fr; } }
+.claim { border-left: 2px solid var(--hair); padding-left: 12px; }
+.claim .k { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); }
+.claim .v { font: 20px var(--mono); font-variant-numeric: tabular-nums; margin: 6px 0 4px; }
+.claim .d { color: var(--ink-faint); font-size: 11px; line-height: 1.5; }
+.claim.refuted { border-left-color: rgba(107,47,196,.65); }
+.claim.refuted .v { color: var(--ink-dim); text-decoration: line-through; text-decoration-thickness: 1px; }
+.claim.result .v { color: var(--ice); }
+.cohort-table { width: 100%; margin-top: 18px; border-collapse: collapse; font-size: 12px; }
+.cohort-table th { text-align: left; font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+                   color: var(--ink-faint); font-weight: 600; padding: 0 10px 7px 0; border-bottom: 1px solid var(--hair); }
+.cohort-table td { padding: 7px 10px 7px 0; border-bottom: 1px solid rgba(191,239,255,.05);
+                   font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--ink-dim); }
+.cohort-table td.sig { font-family: var(--sans); color: var(--ink-dim); }
+.cohort-table td.num { text-align: right; }
+.verdict-line { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--hair);
+                color: var(--ink-dim); font-size: 12px; line-height: 1.6; }
+.verdict-line b { color: var(--ink); font-weight: 600; }
