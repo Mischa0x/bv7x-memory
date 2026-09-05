@@ -137,6 +137,57 @@ as proximity to signal, which here means *did your rule fire*; and gold marks on
 a verdict the interval supports. With memory on, most nights, there is no gold on
 the page at all. That is the honest picture, and the brand already says so.
 
+## Who moved? — the finding that needed memory
+
+Every question above is asked of one night, and one night is a pure function of
+the ledger. This one is asked of *time*: for each rule, has its stated condition
+ever actually fired — classified from the nights **strictly before** tonight, so
+it is what memory knew when the call was made.
+
+Over 21 nights, among 996 rules with 8+ calls:
+
+```
+never fired    567   condition never held — called through the else leg, one direction, 567/567
+always fired   254   condition always held — one direction, 252/254
+switched       175   the only rules that ever changed their call
+```
+
+**82% of the fleet did not change its call in three weeks.** Within-rule
+split-half correlation of engagement is r = +0.87 — a trait, not a coincidence —
+and it survives both controls: 988 of the 996 are total predicates that *can* go
+either way, and the regime moved (distanceFromMA200 spanned 25 points, roc7d 26).
+Those rules did not.
+
+What it does to the signal, on 2026-09-01:
+
+```
+naive        n=5,586   50.3% UP   CI width  2.6pp
+responsive   n=  286   50.3% UP   CI width 11.5pp      ← 4.4× wider
+```
+
+Same point estimate. The naive interval is **4.4× too narrow**, because it counts
+agents whose call cannot move as if they were independent reads of tonight.
+That is deploy-time composition — a bias term fixed when each threshold was
+written — reported as opinion. **This is a claim about stated uncertainty, not
+about which direction is right.**
+
+And it is memory, in the sense the earlier panels were not: a constant-output
+agent and a responsive one look identical on any single night. It takes a
+history. Classification needs six prior nights of a rule's own calls, so on
+2026-08-27 the panel says **CANNOT SAY — 13 of 1,926 callers have 6+ prior nights,
+and only 3 of those ever switched**, and on 2026-09-01 the same fleet classifies.
+The panel lights up as memory deepens. Delete the store and tonight's answer does
+not degrade to a view; the ability to state an honest interval is gone.
+
+```
+python3 -m quorum history 2026-09-01         # the decomposition, from records
+python3 -m unittest tests.test_engagement -v   # 10 tests: prior-only, shallow → CANNOT SAY, off → CANNOT SAY
+```
+
+This is the first positive result in the repo, and it came after three nulls.
+It is about precision, not being right; the accuracy question was closed in
+writing before the window opened and this does not reopen it.
+
 ## Are they the same opinion? (a claim, tested, and refuted)
 
 There is an obvious argument that the field is far smaller than it looks. A call

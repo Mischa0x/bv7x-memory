@@ -7,6 +7,7 @@
   serve   [--port N] [--store PATH]                        the screen: the field explains itself
   attest  NIGHT [--store PATH]                              print the commitment for NIGHT (never broadcasts)
   verify  [--receipt PATH]                                 recompute the commitment and check it against attestation.json
+  history NIGHT [--store PATH]                              tonight decomposed by each rule's engagement history
 """
 import argparse, json, os, sys
 from .record import QuorumMemory, DEFAULT_STORE, CANNOT_SAY
@@ -22,6 +23,7 @@ def main(argv=None):
     a = sub.add_parser('serve'); a.add_argument('--port', type=int, default=8420); a.add_argument('--store', default=DEFAULT_STORE)
     a = sub.add_parser('attest'); a.add_argument('night'); a.add_argument('--store', default=DEFAULT_STORE)
     a = sub.add_parser('verify'); a.add_argument('--receipt', default=None)
+    a = sub.add_parser('history'); a.add_argument('night'); a.add_argument('--store', default=DEFAULT_STORE)
     args = p.parse_args(argv)
 
     if args.cmd == 'field' and args.memory == 'off':
@@ -49,7 +51,7 @@ def main(argv=None):
         from .server import serve
         return serve(args.port, args.store)
 
-    if args.cmd in ('field', 'record', 'status') and not os.path.exists(args.store):
+    if args.cmd in ('field', 'record', 'status', 'history') and not os.path.exists(args.store):
         # The deletion gate, honoured at the CLI: no store means CANNOT SAY, not an exception and not zeros.
         print(json.dumps({'status': CANNOT_SAY, 'reason': f'no memory store at {args.store}'}, indent=1)); return 2
 
@@ -63,6 +65,9 @@ def main(argv=None):
                           'db_mb': round(st['db_size_bytes'] / 1e6, 2), 'cap_pct': round(100 * st['pct_used'], 1), 'tier': st['tier']}, indent=1))
     elif args.cmd == 'field':
         print(json.dumps(mem.field(args.night, memory=True), indent=1))
+    elif args.cmd == 'history':
+        from .server import field_on
+        print(json.dumps(field_on(args.night, args.store).get('history'), indent=1))
     elif args.cmd == 'record':
         r = mem.record(args.night, args.rule)
         print(json.dumps(r if r is not None else {'status': CANNOT_SAY, 'reason': 'night or rule not in memory'}, indent=1))

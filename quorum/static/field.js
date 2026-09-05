@@ -149,6 +149,57 @@ function renderBelief(d) {
     </div>`;
 }
 
+function renderHistory(d) {
+  const el = $('history'), h = d.history;
+  const pp = v => (v == null ? '—' : (v * 100).toFixed(1) + '%');
+  if (!h || h.status !== 'ok') {
+    const shallow = h && h.prior_nights != null;
+    el.innerHTML = `<div class="cannot-say">
+        <div class="big">CANNOT SAY</div>
+        <div class="why-not">${(h && h.reason) || 'no history'}${shallow ? `<br><br>
+          An engagement class is a property of a rule's <em>history</em>, classified from the nights
+          before tonight. Memory is ${h.prior_nights} night${h.prior_nights === 1 ? '' : 's'} deep here.
+          It deepens nightly — on 2026-09-01 the same fleet classifies.` : `<br><br>
+          Without the store there is no history, so a constant-output agent and a responsive one look
+          identical — every vote weighs the same, and the naive interval is all that can be said.`}</div>
+      </div>`;
+    return;
+  }
+  // both intervals on one 0–100% axis
+  const seg = (ci, cls, lab) => {
+    const l = ci[0] * 100, w = (ci[1] - ci[0]) * 100;
+    return `<div class="ivl ${cls}" style="left:${l.toFixed(2)}%;width:${w.toFixed(2)}%"><span class="ivl-lab">${lab}</span></div>`;
+  };
+  const c = h.classes || {};
+  const cell = (k, label, note) => {
+    const g = c[k]; if (!g) return '';
+    return `<div class="cls ${k === 'switching' ? 'switching' : 'constant'}">
+      <div class="k">${label}</div>
+      <div class="v">${num(g.n)}</div>
+      <div class="d">${note}${g.rate_withheld ? '' : ` · ${pp(g.up_share)} UP`}</div></div>`;
+  };
+  el.innerHTML = `
+    <div class="ivl-wrap"><div class="ivl-axis"><div class="ivl-mid"></div>
+      ${seg(h.naive.ci, 'naive', `naive · n=${num(h.naive.n)}`)}
+      ${seg(h.responsive.ci, 'resp', `responsive · n=${num(h.responsive.n)}`)}
+    </div></div>
+    <div class="classes">
+      ${cell('never', 'never fired', 'condition never held — called through the else leg every prior night')}
+      ${cell('always', 'always fired', 'condition always held — one direction every prior night')}
+      ${cell('switching', 'switched', 'has called both ways — the only agents responding to the market')}
+    </div>
+    <p class="verdict-line"><b>The naive interval is ${h.precision_ratio}× too narrow.</b>
+      Naive: ${pp(h.naive.up_share)} UP, CI [${pp(h.naive.ci[0])}, ${pp(h.naive.ci[1])}] over ${num(h.naive.n)} calls.
+      Responsive: ${pp(h.responsive.up_share)} UP, CI [${pp(h.responsive.ci[0])}, ${pp(h.responsive.ci[1])}] over ${num(h.responsive.n)}.
+      ${Math.round(h.constant_share * 100)}% of the classified fleet has not changed its call in ${h.prior_nights} nights —
+      deploy-time composition counted as if it were tonight's opinion. Precision manufactured by counting
+      agents that cannot move. This is a claim about stated uncertainty, not about which direction is right.
+      <br><br>
+      Classified from ${h.prior_nights} prior nights; ${num(h.unclassified)} callers are too new to classify and are
+      counted in the naive figure only. Recomputed from ${num(h.nights_in_memory)} nights of records in ${h.elapsed_ms} ms.</p>
+    <div class="depth"><span>memory depth</span><span class="bar"><i style="width:${Math.min(100, 100 * h.prior_nights / 20).toFixed(0)}%"></i></span><span>${h.prior_nights} nights</span></div>`;
+}
+
 function renderCohorts(d) {
   const el = $('cohorts'), c = d.cohorts;
   if (!c || c.status) {
@@ -218,6 +269,7 @@ function renderCannotSay(d) {
   const failed = d.status === 'FAILED';
   $('why').innerHTML = ''; $('why-note').textContent = '';
   $('field-count').textContent = ''; $('field-note').textContent = '';
+  renderHistory({ history: { status: d.status, reason: d.reason } });
   renderCohorts({ cohorts: { status: d.status, reason: d.reason } });
   setNodes('');
   $('belief').innerHTML = `<div class="cannot-say ${failed ? 'failed' : ''}">
@@ -246,6 +298,7 @@ async function load() {
 
   renderWhy(d);
   renderBelief(d);
+  renderHistory(d);
   renderCohorts(d);
   setNodes(d.nodes);
   const shown = sampled ? `showing 6,000 of ${num(sampled)} calls (evenly sampled)`

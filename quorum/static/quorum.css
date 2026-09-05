@@ -155,3 +155,25 @@ footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--hair);
 .verdict-line { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--hair);
                 color: var(--ink-dim); font-size: 12px; line-height: 1.6; }
 .verdict-line b { color: var(--ink); font-weight: 600; }
+
+/* ── history: two intervals on one axis, so the false precision is visible ── */
+.ivl-axis { position: relative; height: 62px; margin: 16px 0 6px; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+.ivl-mid  { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(191,239,255,.22); }
+.ivl-mid::after { content: '50%'; position: absolute; top: -16px; left: -12px; font: 10px var(--mono); color: var(--ink-faint); }
+.ivl { position: absolute; height: 12px; border-radius: 6px; }
+.ivl.naive { top: 10px; background: rgba(46,19,84,.85); border: 1px solid rgba(107,47,196,.6); }
+.ivl.resp  { top: 36px; background: rgba(79,192,255,.22); border: 1px solid var(--sky); box-shadow: 0 0 10px rgba(79,192,255,.25); }
+.ivl-lab { position: absolute; right: 100%; margin-right: 10px; font: 10px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+.ivl.naive .ivl-lab { top: -1px; } .ivl.resp .ivl-lab { top: -1px; }
+.ivl-wrap { padding-left: 120px; padding-right: 14px; }
+.classes { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 16px; }
+@media (max-width: 780px) { .classes { grid-template-columns: 1fr; } }
+.cls { border-left: 2px solid var(--hair); padding-left: 12px; }
+.cls .k { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); }
+.cls .v { font: 18px var(--mono); font-variant-numeric: tabular-nums; margin: 5px 0 3px; }
+.cls .d { color: var(--ink-faint); font-size: 11px; line-height: 1.5; }
+.cls.switching { border-left-color: var(--sky); } .cls.switching .v { color: var(--ice); }
+.cls.constant .v { color: var(--ink-dim); }
+.depth { display: flex; align-items: center; gap: 10px; margin-top: 14px; color: var(--ink-faint); font-size: 11px; }
+.depth .bar { flex: 1; height: 4px; background: rgba(46,19,84,.55); border-radius: 2px; overflow: hidden; }
+.depth .bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--violet), var(--sky)); }

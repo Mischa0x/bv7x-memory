@@ -26,7 +26,9 @@ from urllib.parse import urlparse, parse_qs
 from .record import QuorumMemory, DEFAULT_STORE, CANNOT_SAY, MIN_N, wilson, decode_rule
 from ._gate import _verdict
 from .cohorts import cohort_stats
+from .engagement import decompose, MIN_PRIOR_NIGHTS
 from .why import signals_of
+from collections import defaultdict
 
 HERE     = os.path.dirname(os.path.abspath(__file__))
 STATIC   = os.path.join(HERE, 'static')
@@ -67,6 +69,11 @@ def field_off(night):
             # of them were the same vote.
             'cohorts': {'status': CANNOT_SAY,
                         'reason': 'a configuration is a property of the rule, and the rule is in the store'},
+            # An engagement class is a property of a rule's HISTORY. Without the
+            # store there is no history, so a constant-output agent and a
+            # responsive one are indistinguishable — every vote weighs the same.
+            'history': {'status': CANNOT_SAY,
+                        'reason': "an engagement class is a property of a rule's history, and the history is in the store"},
             'warrant': CANNOT_SAY}
 
 
@@ -106,7 +113,20 @@ def field_on(night, store):
         except Exception:
             pass                      # an undecodable rule stays unplaced, and is counted as such
 
+    # History: every night in memory, so each rule can be classified from the
+    # nights BEFORE tonight. This is the one computation here that a single
+    # night's ledger cannot reproduce — and it is recomputed per request.
+    t_h = time.perf_counter()
+    basis_by_rule = defaultdict(dict)
+    for n in mem.nights():
+        for r in (mem.records(n) or []):
+            basis_by_rule[r['rule_id']][n] = r['basis']
+    history = decompose({r['rule_id']: r['direction'] for r in recs}, basis_by_rule, night)
+    history['elapsed_ms'] = round((time.perf_counter() - t_h) * 1000, 1)
+    history['nights_in_memory'] = len(mem.nights())
+
     return {'night': night, 'memory': True, 'status': 'ok',
+            'history': history,
             'cohorts': cohort_stats(recs, sig_by_rule) or {
                 'status': CANNOT_SAY, 'reason': 'no calls in memory for this night'},
             'counts': {'rows': len(recs), 'calls': len(calls),

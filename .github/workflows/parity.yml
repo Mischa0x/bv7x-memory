@@ -44,6 +44,8 @@ jobs:
         run: python3 -m unittest tests.test_server -v
       - name: the cohort test detects real clustering and refuses it where absent
         run: python3 -m unittest tests.test_cohorts -v
+      - name: engagement classifies from prior nights only, and shallow memory says CANNOT SAY
+        run: python3 -m unittest tests.test_engagement -v
       - name: a clean checkout reproduces the commitment attested on Base
         run: |
           python3 -m unittest tests.test_attest -v
