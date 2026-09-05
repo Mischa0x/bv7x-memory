@@ -5,6 +5,8 @@
   field   NIGHT [--store PATH] [--memory on|off]           the field's belief for a night
   record  NIGHT RULE_ID [--store PATH]                     one decision record, reconstructed
   serve   [--port N] [--store PATH]                        the screen: the field explains itself
+  attest  NIGHT [--store PATH]                              print the commitment for NIGHT (never broadcasts)
+  verify  [--receipt PATH]                                 recompute the commitment and check it against attestation.json
 """
 import argparse, json, os, sys
 from .record import QuorumMemory, DEFAULT_STORE, CANNOT_SAY
@@ -18,6 +20,8 @@ def main(argv=None):
     a = sub.add_parser('field'); a.add_argument('night'); a.add_argument('--store', default=DEFAULT_STORE); a.add_argument('--memory', choices=['on', 'off'], default='on')
     a = sub.add_parser('record'); a.add_argument('night'); a.add_argument('rule'); a.add_argument('--store', default=DEFAULT_STORE)
     a = sub.add_parser('serve'); a.add_argument('--port', type=int, default=8420); a.add_argument('--store', default=DEFAULT_STORE)
+    a = sub.add_parser('attest'); a.add_argument('night'); a.add_argument('--store', default=DEFAULT_STORE)
+    a = sub.add_parser('verify'); a.add_argument('--receipt', default=None)
     args = p.parse_args(argv)
 
     if args.cmd == 'field' and args.memory == 'off':
@@ -26,6 +30,20 @@ def main(argv=None):
         D = json.load(open(src))
         dirs = [r[3] for r in D['rows'] if r[2] == args.night]
         print(json.dumps(QuorumMemory(None).field(args.night, memory=False, naive_directions=dirs), indent=1)); return 0
+
+    if args.cmd == 'verify':
+        # Needs no store, no key and no network — the point of the receipt.
+        from .attest import verify, RECEIPT
+        r = verify(args.receipt or RECEIPT)
+        print(json.dumps(r, indent=1))
+        return 0 if r['ok'] else 1
+
+    if args.cmd == 'attest':
+        # Prints. Never broadcasts — signing lives in tools/attest-base.mjs and
+        # is an operator action, deliberately outside the judge-runnable path.
+        from .attest import compute
+        print(json.dumps(compute(args.night, args.store), indent=1))
+        return 0
 
     if args.cmd == 'serve':
         from .server import serve

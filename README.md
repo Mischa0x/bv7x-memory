@@ -184,6 +184,47 @@ The clustering test is drilled in both directions: synthetic cohorts that really
 are one opinion register as clustered, cohorts that split do not. A test that
 could only ever pass would be decoration.
 
+## The commitment on Base
+
+```
+python3 -m quorum verify      # stdlib, no key, no network, no store
+```
+
+The numbers on this page could have been chosen after the fact. So the frozen
+field and the deletion-gate answer it produces are committed to a digest, and that
+digest is attested on **Base mainnet**:
+
+| | |
+|---|---|
+| commitment | `0xfaa6567cf91ca8894b56340b164139c9d50d72a988dc954eda2ae60d5234925e` |
+| attestation | [`0x30431e64…cd50`](https://base.easscan.org/attestation/view/0x30431e642678aa1d0442c8373139e47d763f67af85899809174e5621cc78cd50) |
+| transaction | [`0xa0013b4f…291f`](https://basescan.org/tx/0xa0013b4ff269aca8f499ca619e360e1b3465c40e118eb572031176171b4f291f) |
+| attester | `0xd8B71d23e1a8da9867497C0E757A1143B94C3e1e` |
+| time | 2026-09-05T08:43:59Z, block 50904246 |
+
+The preimage is one line and every field is in this repo:
+
+```
+quorum-attest-v1|2026-08-27|<sha256 of tests/fixtures/rows.json>|E:588/281|N:715/388
+```
+
+`E` is the evidenced answer — with memory. `N` is the naive vote — without it.
+**Both are in the preimage on purpose:** the claim is that they disagree, so the
+commitment pins the disagreement rather than one side of it. Change either, or
+edit a byte of the frozen field, and the digest moves; `tests/test_attest.py`
+asserts exactly that, including that a doctored receipt fails.
+
+**It commits a record, not a forecast.** An open call's direction is the thing
+BV-7X sells, and it is never rendered — in aggregate or per agent. Publishing one
+to earn a multiplier would trade the product for a rosette. A content commitment
+proves the numbers were not tuned; a forecast commitment would leak the product
+and prove less.
+
+Broadcasting is an operator action in `tools/attest-base.mjs`, deliberately
+outside the judge-runnable path: it needs Node, ethers and a funded key, reads
+that key from the environment only, and **refuses rather than simulates** — no key,
+or no explicit `--broadcast`, and it stops. Verification needs none of that.
+
 ## The foundation: atom parity
 
 `quorum/why.py` decides which facts produced a call. It is a port of the production

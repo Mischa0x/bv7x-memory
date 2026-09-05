@@ -1,0 +1,27 @@
+{
+  "_what": "Commitment to the frozen field and the deletion-gate answer it produces, attested on Base.",
+  "_verify": "python3 -c \"from quorum.attest import verify; import json; print(json.dumps(verify(), indent=1))\"",
+  "scheme": "quorum-attest-v1",
+  "night": "2026-08-27",
+  "fixture_sha256": "bbab1de97544cd3f6005ae3bacb87b6e11e8c80bec4d2e711eab5600103f65c5",
+  "evidenced": {
+    "n": 588,
+    "up": 281
+  },
+  "naive": {
+    "n": 715,
+    "up": 388
+  },
+  "preimage": "quorum-attest-v1|2026-08-27|bbab1de97544cd3f6005ae3bacb87b6e11e8c80bec4d2e711eab5600103f65c5|E:588/281|N:715/388",
+  "commitment": "0xfaa6567cf91ca8894b56340b164139c9d50d72a988dc954eda2ae60d5234925e",
+  "chain": "base-mainnet-8453",
+  "attester": "0xd8B71d23e1a8da9867497C0E757A1143B94C3e1e",
+  "tx": "0xa0013b4ff269aca8f499ca619e360e1b3465c40e118eb572031176171b4f291f",
+  "block": 50904246,
+  "uid": "0x30431e642678aa1d0442c8373139e47d763f67af85899809174e5621cc78cd50",
+  "schemaUID": "0x6803eb64f967aceffb93e16cbb7b29d91ca68577a3b17b3ea7a589ce243942f6",
+  "attestedAt": "2026-09-05T08:52:00Z",
+  "explorer": "https://basescan.org/tx/0xa0013b4ff269aca8f499ca619e360e1b3465c40e118eb572031176171b4f291f",
+  "easscan": "https://base.easscan.org/attestation/view/0x30431e642678aa1d0442c8373139e47d763f67af85899809174e5621cc78cd50",
+  "schema": "string scheme,string night,bytes32 commitment"
+}
