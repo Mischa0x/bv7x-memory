@@ -106,7 +106,7 @@ Switch to the browser, type `localhost:8420`. Night is `2026-08-27`, memory **on
 
 **Switch back to memory on. Scroll to "Who moved?".** Change night to `2026-09-01`.
 
-> *This is the finding. Over twenty-one nights, eighty-two percent of agents never changed their call. Their rule's condition either always held or never held. Only eighteen percent ever switched — the only agents actually responding to the market. So the naive aggregate — five and a half thousand calls with a tight interval — is mostly deploy-time composition counted as opinion. The honest interval is four times wider. Same point estimate. The certainty was manufactured.*
+> *This is the finding. Over twenty-one nights, eighty-two percent of the rules never changed their call. Their stated condition either always held or never held. Only eighteen percent ever switched — the only ones actually responding to the market. So the naive aggregate — five and a half thousand calls with a tight interval — is mostly deploy-time composition counted as opinion. The honest interval is four times wider. Same point estimate. The certainty was manufactured.*
 
 > *And this is the part a single night can't tell you. Classified from the nights before tonight only — on the twenty-seventh, memory is too shallow and the panel says cannot say. Five nights later the same population classifies. Memory deepening changes what the product is able to say.*
 
