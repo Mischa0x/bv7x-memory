@@ -1,5 +1,18 @@
 # bv7x-memory
 
+## Quorum — memory of why
+
+**Persistent memory of *why* an agent predicted what it did, at that exact
+moment** — the facts, the rule, and which part of the rule actually fired —
+carried between every prediction and every session, so the protocol accumulates
+a substrate on which correlations can be found: between strategy agents first,
+across markets after.
+
+Everything below is what that memory makes possible. The shortest statement of
+it: a record of *why* is what lets the protocol tell a call that was reasoned
+from a call that was defaulted, and therefore lets it say, on a night when it
+knows nothing, that it knows nothing.
+
 **A pre-committed track record you can ask questions of.**
 
 Since February 2026 the BV-7X oracle has published every Bitcoin call it makes
