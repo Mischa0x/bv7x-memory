@@ -43,7 +43,7 @@ $QUORUM_PY -m quorum field 2026-08-27
 
 Expected: `"status": "CANNOT SAY", "reason": "no memory store at …"`
 
-> *Quorum is a memory of why. Every night, five and a half thousand strategy agents look at the same Bitcoin market and each says UP or DOWN. The protocol has always kept the call. It has never kept the reason — which conditions the agent's rule was watching, what they read, whether they held. With no memory, ask the field what it believes and the only honest answer is: cannot say.*
+> *Quorum is a memory of why. Every night, thousands of strategy agents look at the same Bitcoin market and each says UP or DOWN. The protocol has always kept the call. It has never kept the reason — which conditions the agent's rule was watching, what they read, whether they held. With no memory, ask the field what it believes and the only honest answer is: cannot say.*
 
 ### 0:40 — Ingest `[terminal]`
 
@@ -88,7 +88,7 @@ $QUORUM_PY -m quorum.conviction
 Expected: evidenced `50.0%` / default `49.7%`, Brier `0.3675` / `0.4318`; then
 `as published 0.4094`, `defaults neutralised 0.2909`, `both honest 0.2500`.
 
-> *One number for what that is worth. Accuracy is flat across the split — fifty percent on the evidenced calls, forty-nine point seven on the defaults. The reason does not tell you who is right, and we say so on the page. But conviction — the score on the confidence they claim — is not flat. As published the fleet scores point four one, worse than our own first-party oracle at point three one. Neutralise the confidence on the calls that fell through to a default, and the same calls score point two nine. Better than the oracle, with no agent predicting any better. Point two five is the floor, because getting under a coin flip is skill and this buys none. What it buys is the distance from point four one to point two five — and that is the stretch with anything left on it.*
+> *One number for what that is worth. Accuracy is flat across the split — fifty percent on the evidenced calls, forty-nine point seven on the defaults. The reason does not tell you who is right, and we say so on the page. But conviction — the score on the confidence they claim — is not flat. As published the aggregate scores point four one, worse than the first-party oracle at point three one. Neutralise the confidence on the calls that fell through to a default, and the same calls score point two nine. Better than the oracle, with no agent predicting any better. Point two five is the floor, because getting under a coin flip is skill and this buys none. What it buys is the distance from point four one to point two five — and that is the stretch with anything left on it.*
 
 ### 2:10 — The screen `[terminal → browser]`
 
@@ -108,7 +108,7 @@ Switch to the browser, type `localhost:8420`. Night is `2026-08-27`, memory **on
 
 > *This is the finding. Over twenty-one nights, eighty-two percent of agents never changed their call. Their rule's condition either always held or never held. Only eighteen percent ever switched — the only agents actually responding to the market. So the naive aggregate — five and a half thousand calls with a tight interval — is mostly deploy-time composition counted as opinion. The honest interval is four times wider. Same point estimate. The certainty was manufactured.*
 
-> *And this is the part a single night can't tell you. Classified from the nights before tonight only — on the twenty-seventh, memory is too shallow and the panel says cannot say. Five nights later the same fleet classifies. Memory deepening changes what the product is able to say.*
+> *And this is the part a single night can't tell you. Classified from the nights before tonight only — on the twenty-seventh, memory is too shallow and the panel says cannot say. Five nights later the same population classifies. Memory deepening changes what the product is able to say.*
 
 **Scroll to "Are they the same opinion?".**
 

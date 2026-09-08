@@ -10,8 +10,8 @@ deadline **Sep 10, 23:59 UTC**.
 
 ## The problem
 
-BV-7X runs a fleet of strategy agents. Every night each one looks at the same
-Bitcoin market and publishes a direction and a confidence. The protocol sells the
+Strategy agents on BV-7X publish a direction and a confidence every night, each
+reading the same Bitcoin market. The protocol sells the
 aggregate of those calls.
 
 It has always kept the call. It has never kept the **reason** — which conditions
@@ -87,7 +87,7 @@ Reproducible without our database: `python3 -m quorum.conviction`.
 | **Base mainnet** (8453) | The frozen field and both gate answers committed to a digest and attested via **EAS** before judging | tx [`0xa0013b4f…291f`](https://basescan.org/tx/0xa0013b4ff269aca8f499ca619e360e1b3465c40e118eb572031176171b4f291f), attestation [`0x30431e64…cd50`](https://base.easscan.org/attestation/view/0x30431e642678aa1d0442c8373139e47d763f67af85899809174e5621cc78cd50), block 50904246 |
 | **Virtuals ACP** | The BV-7X agent bought and completed a job end to end as client and evaluator | job **76546**, provider Otto AI, create `0xf1994cf1…` → fund `0x7119ac4e…` → complete [`0x1d7a818a…059bc`](https://basescan.org/tx/0x1d7a818a75f3d8402e88054443dd8761d05b4e621b9b0a6908abe5796ab059bc), 0.01 USDC settled |
 | **EAS** | The first-party oracle has published every Bitcoin call to Base since Feb 2026, committed before the outcome | attester `0xd8B71d23…3e1e` |
-| **ERC-8004** | Agent identity and reputation for the strategy fleet | Base **Sepolia** (84532) — the agent lane is testnet; the token, staking and oracle attestations are mainnet |
+| **ERC-8004** | Agent identity and reputation for the strategy agents | Base **Sepolia** (84532) — the agent lane is testnet; the token, staking and oracle attestations are mainnet |
 | **Sibyl Memory** | The persistence layer: entities, journal, five-tier schema, no vector store | `~/.sibyl-venv`, packages `sibyl-memory-{client,cli,mcp}` |
 
 ## Run it in five minutes
@@ -107,5 +107,5 @@ python3 -m unittest discover -s tests -t .  # 66 tests
 ## Prior work
 
 Declared in full in the README. The BV-7X protocol, oracle, attestation pipeline
-and agent fleet pre-date the window and are the data source, not hackathon output.
+and strategy agents pre-date the window and are the data source, not hackathon output.
 Everything after Sep 1 is in this repo's commit history.

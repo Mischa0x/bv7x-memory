@@ -21,14 +21,14 @@ reconstructible from IPFS. That started as accountability. What it became is a
 record nobody can edit after the fact, us included, which turns out to be the
 only kind worth querying.
 
-This tool turns that record, and the strategy fleet's nightly cross-section,
+This tool turns that record, and the strategy agents' nightly cross-section,
 into structured memory on the [Sibyl Memory](https://github.com/Sibyl-Labs/Sibyl-Memory)
 plugin — and demonstrates the finding that motivated it.
 
 ## How it admits when it knows nothing
 
-The protocol publishes one number a night: what the fleet collectively says
-Bitcoin will do. Before this, that number always had a direction in it — because
+The protocol publishes one number a night: what the strategy agents collectively
+say Bitcoin will do. Before this, that number always had a direction in it — because
 a call that fired on its evidence and a call that fell through to its rule's
 `else` leg are the same row once they are written down.
 
@@ -77,8 +77,8 @@ accuracy, and only one of them will make you cancel a wedding for nothing.
 said it was and whether it was entitled to be — the Brier score, mean
 `(stated − outcome)²`, lower better, a coin flip costing `0.2500`.
 
-Our fleet is the second forecaster. It publishes about `0.93` and is right about
-half the time. Until the basis of a call was recoverable there was nothing to
+The agents are the second forecaster. They publish about `0.93` and are right
+about half the time. Until the basis of a call was recoverable there was nothing to
 condition that claim on: a call that fired on its evidence and a call that fell
 through its rule's `else` leg are the same row, carrying the same number.
 
@@ -108,13 +108,13 @@ both classes stated honestly            0.2500   better
 
 The second and third lines are arithmetic projections over measured components —
 what these same calls would have scored had they stated something else. **No agent
-predicts any better in either.** The fleet passes its own oracle by dropping a
-claim it was never entitled to make.
+predicts any better in either.** The aggregate passes the first-party oracle by
+dropping a claim it was never entitled to make.
 
 `0.2500` is the floor and nothing here goes below it. Getting under a coin flip is
 skill, and this buys none. What it buys is the distance from `0.41` to `0.25`,
 which is the only stretch of that road with anything left on it: decomposed, the
-fleet's score is `reliability 0.1966` against `resolution 0.0049` — almost all
+aggregate's score is `reliability 0.1966` against `resolution 0.0049` — almost all
 miscalibration, almost no discrimination.
 
 That is the case for memory of why, in one line. It does not make the field
@@ -261,7 +261,7 @@ always fired   254   condition always held — one direction, 252/254
 switched       175   the only rules that ever changed their call
 ```
 
-**82% of the fleet did not change its call in three weeks.** Within-rule
+**82% of the rules did not change their call in three weeks.** Within-rule
 split-half correlation of engagement is r = +0.87 — a trait, not a coincidence —
 and it survives both controls: 988 of the 996 are total predicates that *can* go
 either way, and the regime moved (distanceFromMA200 spanned 25 points, roc7d 26).
@@ -284,7 +284,7 @@ And it is memory, in the sense the earlier panels were not: a constant-output
 agent and a responsive one look identical on any single night. It takes a
 history. Classification needs six prior nights of a rule's own calls, so on
 2026-08-27 the panel says **CANNOT SAY — 13 of 1,926 callers have 6+ prior nights,
-and only 3 of those ever switched**, and on 2026-09-01 the same fleet classifies.
+and only 3 of those ever switched**, and on 2026-09-01 the same population classifies.
 The panel lights up as memory deepens. Delete the store and tonight's answer does
 not degrade to a view; the ability to state an honest interval is gone.
 
@@ -406,7 +406,7 @@ files, with git blob hashes, is in `tests/vendor/PROVENANCE.md`.
 | | chain | what |
 |---|---|---|
 | **oracle** | Base mainnet 8453 | first-party attester; every call committed before the outcome |
-| **fleet** | Base Sepolia 84532 | strategy-agent fleet, night aggregates, the obedience buckets |
+| **fleet** | Base Sepolia 84532 | strategy agents, night aggregates, the obedience buckets |
 
 There is deliberately **no code path that unions them**. `ask` takes exactly one
 `--record`, the loaders write disjoint entity categories, and a registry state
@@ -431,7 +431,7 @@ which is false.
 
 ## Obedience is not performance
 
-Fleet nights are stored as aggregates, never per-agent — the free-tier cap and
+Nights are stored as aggregates, never per-agent — the free-tier cap and
 statistical power agree that thirty resolutions a season carries no signal
 while cohort/night carries thousands.
 

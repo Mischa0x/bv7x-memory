@@ -4,7 +4,7 @@ Accuracy asks whether a call was right. Conviction asks how sure the agent SAID 
 was, and scores the distance between that claim and what happened -- the Brier score,
 mean (stated - outcome)^2, lower better, a coin flip costing 0.2500.
 
-The fleet's problem is not that it predicts badly. It is that it publishes ~0.93 and
+The problem is not that the agents predict badly. It is that they publish ~0.93 and
 is right about half the time, and until the basis of each call was recoverable there
 was nothing in the record to condition that claim on: a call that fired on its own
 evidence and a call that fell through its rule's else leg are the same row.
