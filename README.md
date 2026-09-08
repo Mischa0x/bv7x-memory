@@ -67,6 +67,60 @@ That is the whole claim for memory being load-bearing here: without the recorded
 reason an evidenced call and a fallback are indistinguishable, so only one number
 can ever be computed, and that number always has a direction in it.
 
+## What it improves: conviction, not accuracy
+
+Think of two weather forecasters. Both are right half the time. The first says
+"60% chance of rain." The second says "I am 99% certain it will rain." Identical
+accuracy, and only one of them will make you cancel a wedding for nothing.
+
+**Accuracy** asks whether a call was right. **Conviction** asks how sure the agent
+said it was and whether it was entitled to be — the Brier score, mean
+`(stated − outcome)²`, lower better, a coin flip costing `0.2500`.
+
+Our fleet is the second forecaster. It publishes about `0.93` and is right about
+half the time. Until the basis of a call was recoverable there was nothing to
+condition that claim on: a call that fired on its evidence and a call that fell
+through its rule's `else` leg are the same row, carrying the same number.
+
+Re-derive the basis and join to settled outcomes — 9,393 calls, reproducible from
+`tests/fixtures/conviction.json` with `python3 -m quorum.conviction`:
+
+```
+basis             n   accuracy            95% CI    Brier
+evidenced     3,269      50.0%      [48.2, 51.7]   0.3675
+default       6,124      49.7%      [48.5, 51.0]   0.4318
+```
+
+**Accuracy is flat.** Both classes sit on a coin flip and both intervals contain
+50%. The split does not sort right calls from wrong ones, and this repo does not
+claim it does — six in-house accuracy programmes already failed and a seventh is
+not on offer.
+
+**Conviction is not flat.** The same split sorts earned confidence from unearned,
+and that is worth a number:
+
+```
+scenario                                 Brier   vs first-party oracle 0.3121
+as published (MEASURED)                 0.4094   worse
+default calls neutralised to 0.50       0.2909   better
+both classes stated honestly            0.2500   better
+```
+
+The second and third lines are arithmetic projections over measured components —
+what these same calls would have scored had they stated something else. **No agent
+predicts any better in either.** The fleet passes its own oracle by dropping a
+claim it was never entitled to make.
+
+`0.2500` is the floor and nothing here goes below it. Getting under a coin flip is
+skill, and this buys none. What it buys is the distance from `0.41` to `0.25`,
+which is the only stretch of that road with anything left on it: decomposed, the
+fleet's score is `reliability 0.1966` against `resolution 0.0049` — almost all
+miscalibration, almost no discrimination.
+
+That is the case for memory of why, in one line. It does not make the field
+righter. It makes the field's confidence mean something, and the confidence is
+what the protocol sells.
+
 ## The finding
 
 The aggregate is unremarkable:
