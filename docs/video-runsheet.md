@@ -65,6 +65,8 @@ $QUORUM_PY -m quorum field 2026-08-27 --memory off
 Expected, with memory: evidenced `n: 588`, `up_share: 0.478`, CI `[0.438, 0.518]`.
 Expected, without: `n: 715`, `up_share: 0.543`, CI `[0.506, 0.579]`.
 
+> *Note this is a NEW process — nothing is held over from the ingest. It opens the store and recalls.*
+
 > *Same night, two answers. With memory, count only the calls whose stated condition actually held — five hundred and eighty-eight of them — and the field sits at forty-eight percent, an interval straddling the line. No lean. Without memory, every published direction counts the same: fifty-four percent, and the interval clears the line. A confident UP. Memory didn't make the field more accurate. It made it stop pretending.*
 
 ### 1:30 — The gate `[terminal]`
