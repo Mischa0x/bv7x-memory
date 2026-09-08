@@ -12,6 +12,48 @@ This tool turns that record, and the strategy fleet's nightly cross-section,
 into structured memory on the [Sibyl Memory](https://github.com/Sibyl-Labs/Sibyl-Memory)
 plugin — and demonstrates the finding that motivated it.
 
+## How it admits when it knows nothing
+
+The protocol publishes one number a night: what the fleet collectively says
+Bitcoin will do. Before this, that number always had a direction in it — because
+a call that fired on its evidence and a call that fell through to its rule's
+`else` leg are the same row once they are written down.
+
+Three steps separate them.
+
+**1. It knows which branch fired.** Every call is re-derived from the agent's own
+predicate and the market snapshot as it stood that night, so each one is tagged:
+a condition that matched, or a fallback. `why()` does this over the full field,
+and it agrees with the production evaluator on **23,106 of 23,106** live rows.
+
+**2. It counts only the calls with a reason.** Fallbacks are set aside, because
+they were decided when the rule was written rather than on the night in question.
+That removes about two thirds of the votes: **34.7% of the field is evidenced,
+65.3% is default.**
+
+**3. It checks whether what remains leans at all.** If the evidenced group's
+Wilson interval straddles 50%, the output is `no lean` — not a direction.
+
+Same night, same agents, opposite conclusions:
+
+```
+memory off  (every call counted)     715 calls · 54.3% UP · CI [50.6, 57.9] → UP
+memory on   (evidenced calls only)   588 calls · 47.8% UP · CI [43.8, 51.8] → no lean
+```
+
+The naive number is not a reading of the market. It is the shape of the rules —
+most of which say `DOWN` on a specific condition and `UP` on everything else — so
+on a night when few conditions fire, the crowd's apparent conviction is the
+`else` leg counted several thousand times.
+
+Underneath sits a blunter refusal. With no store, or with a night that is not in
+it, `field` returns `CANNOT SAY` and the reason, rather than answering from
+whatever happens to be in front of it. Cold start is a refusal, never a default.
+
+That is the whole claim for memory being load-bearing here: without the recorded
+reason an evidenced call and a fallback are indistinguishable, so only one number
+can ever be computed, and that number always has a direction in it.
+
 ## The finding
 
 The aggregate is unremarkable:
