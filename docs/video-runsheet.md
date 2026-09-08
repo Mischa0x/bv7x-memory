@@ -77,7 +77,18 @@ Expected: `✅ GATE HELD — deleting memory moves the field 6.5pp, and flips th
 
 > *Sibyl scores entries by deleting the memory layer — if the product still works, it's disqualified. This is that test, run against ourselves. Delete memory and the answer changes.*
 
-### 1:50 — The screen `[terminal → browser]`
+### 1:50 — What it is worth `[terminal]`
+
+```bash
+$QUORUM_PY -m quorum.conviction
+```
+
+Expected: evidenced `50.0%` / default `49.7%`, Brier `0.3675` / `0.4318`; then
+`as published 0.4094`, `defaults neutralised 0.2909`, `both honest 0.2500`.
+
+> *One number for what that is worth. Accuracy is flat across the split — fifty percent on the evidenced calls, forty-nine point seven on the defaults. The reason does not tell you who is right, and we say so on the page. But conviction — the score on the confidence they claim — is not flat. As published the fleet scores point four one, worse than our own first-party oracle at point three one. Neutralise the confidence on the calls that fell through to a default, and the same calls score point two nine. Better than the oracle, with no agent predicting any better. Point two five is the floor, because getting under a coin flip is skill and this buys none. What it buys is the distance from point four one to point two five — and that is the stretch with anything left on it.*
+
+### 2:10 — The screen `[terminal → browser]`
 
 ```bash
 $QUORUM_PY -m quorum serve
@@ -101,7 +112,7 @@ Switch to the browser, type `localhost:8420`. Night is `2026-08-27`, memory **on
 
 > *We also tested the obvious objection — that agents reading the same signals are one opinion in many coats. They're not. Against an exact independence baseline: fifty-six point one percent agreement observed, fifty-six point five expected by chance. Indistinguishable from strangers. That claim is struck through on the page, because our own test refuted it.*
 
-### 3:00 — The commitment on Base `[terminal]`
+### 3:20 — The commitment on Base `[terminal]`
 
 Back to the terminal. `Ctrl-C` the server.
 
@@ -117,7 +128,7 @@ Switch to the easscan tab, one beat. Then the basescan tab.
 
 > *And the agent this record belongs to is a live participant on Virtuals ACP — this is a job it bought and completed on Base this week, create, fund, complete.*
 
-### 3:30 — Delete it, on camera `[terminal]`
+### 3:50 — Delete it, on camera `[terminal]`
 
 ```bash
 rm quorum.db && $QUORUM_PY -m quorum field 2026-08-27
@@ -127,7 +138,7 @@ Expected: `"status": "CANNOT SAY"`.
 
 > *Delete the memory. The product doesn't degrade to an estimate. It stops. That's the whole design: a memory that answers everything is how you inherit noise as if it were structure. This one holds n and uncertainty beside every claim — and when you take it away, it says so.*
 
-### 3:45 — Close
+### 4:05 — Close
 
 > *Quorum. Memory of why. Everything is public and reproducible from the repo.*
 
