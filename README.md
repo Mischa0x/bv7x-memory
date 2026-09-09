@@ -198,6 +198,7 @@ entry by deleting the memory layer; ours changes the answer when you do.
 
 ```
 ./deletion-test.sh                 # ingest the frozen field, print with vs without
+                                   #   (needs the Sibyl client — see "Run it" above)
 python3 -m unittest tests.test_record -v   # gate logic, stdlib, no client
 ```
 

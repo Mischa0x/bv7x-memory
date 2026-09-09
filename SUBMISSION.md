@@ -94,8 +94,10 @@ Reproducible without our database: `python3 -m quorum.conviction`.
 
 ```bash
 git clone https://github.com/Mischa0x/bv7x-memory && cd bv7x-memory
+python3 -m venv .venv && . .venv/bin/activate   # PEP 668-safe on Ubuntu/Debian
+pip install 'sibyl-memory-cli[mcp]'             # brings in sibyl-memory-client
 export QUORUM_STORE=$PWD/quorum.db
-python3 -m quorum field 2026-08-27          # CANNOT SAY — no store yet
+python3 -m quorum field 2026-08-27          # CANNOT SAY — no store yet (exit 2, by design)
 python3 -m quorum ingest --from tests/fixtures/rows.json
 python3 -m quorum field 2026-08-27          # a fresh process recalls and answers
 ./deletion-test.sh                          # the gate
@@ -103,6 +105,11 @@ python3 -m quorum.conviction                # what it is worth
 python3 -m quorum verify                    # the Base commitment, offline
 python3 -m unittest discover -s tests -t .  # 66 tests
 ```
+
+`ingest`, `field` once a store exists, and `deletion-test.sh` read and write through
+the Sibyl client, so they need the install above. `conviction`, `verify` and the test
+suite are pure stdlib and run without it. If you would rather not use a venv, point the
+gate at any interpreter that has the client: `QUORUM_PY=/path/to/python ./deletion-test.sh`.
 
 ## Prior work
 
